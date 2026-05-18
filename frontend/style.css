@@ -20,3 +20,9 @@ form {
 #feed img {
   border-radius: 12px;
 }
+
+#feed img {
+  width: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+}
