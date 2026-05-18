@@ -5,6 +5,7 @@ const fs = require("fs");
 
 const app = express();
 const PORT = 3000;
+const posts = [];
 
 // Storage setup
 const storage = multer.diskStorage({
@@ -32,10 +33,15 @@ app.get("/", (req, res) => {
 
 // Upload route
 app.post("/upload", upload.single("image"), (req, res) => {
-  res.json({
-    message: "Image uploaded successfully",
+  const newPost = {
     imageUrl: `/uploads/${req.file.filename}`,
-  });
+    caption: req.body.caption,
+    createdAt: new Date(),
+  };
+
+  posts.push(newPost);
+
+  res.json(newPost);
 });
 
 // Get all uploaded images
