@@ -1,6 +1,7 @@
 const uploadForm = document.getElementById("uploadForm");
 const imageInput = document.getElementById("imageInput");
 const feed = document.getElementById("feed");
+const captionInput = document.getElementById("captionInput");
 
 // Load existing images
 async function loadImages() {
@@ -10,14 +11,26 @@ async function loadImages() {
 
     feed.innerHTML = "";
 
-    images.reverse().forEach((imageUrl) => {
-      const img = document.createElement("img");
+    images.reverse().forEach((post) => {
+        const postDiv = document.createElement("div");
 
-      img.src = imageUrl;
-      img.width = 300;
+        const img = document.createElement("img");
+        img.src = post.imageUrl;
+        img.width = 300;
 
-      feed.appendChild(img);
+        const caption = document.createElement("p");
+        caption.innerText = post.caption;
+
+        const timestamp = document.createElement("small");
+        timestamp.innerText = new Date(post.createdAt).toLocaleString();
+
+        postDiv.appendChild(img);
+        postDiv.appendChild(caption);
+        postDiv.appendChild(timestamp);
+
+        feed.appendChild(postDiv);
     });
+
   } catch (error) {
     console.error(error);
   }
@@ -36,6 +49,7 @@ uploadForm.addEventListener("submit", async (event) => {
 
   const formData = new FormData();
   formData.append("image", file);
+  formData.append("caption", captionInput.value);
 
   try {
     await fetch("/upload", {

@@ -26,3 +26,7 @@ form {
   border-radius: 12px;
   object-fit: cover;
 }
+
+#feed div {
+  margin-bottom: 30px;
+}

@@ -20,6 +20,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Serve frontend files
 app.use(express.static(path.join(__dirname, "../frontend")));
 
@@ -57,7 +60,9 @@ app.get("/images", (req, res) => {
 
     const imageUrls = files.map((file) => `/uploads/${file}`);
 
-    res.json(imageUrls);
+    app.get("/images", (req, res) => {
+      res.json(posts);
+    })
   });
 });
 

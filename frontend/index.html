@@ -9,10 +9,17 @@
     <h1>Mini Instagram 📸</h1>
 
     <form id="uploadForm">
-      <input type="file" id="imageInput" accept="image/*" />
-      <button type="submit">Upload Image</button>
-    </form>
+      <form id="uploadForm">
+  <input type="file" id="imageInput" accept="image/*" />
 
+  <input
+    type="text"
+    id="captionInput"
+    placeholder="Write caption..."
+  />
+
+  <button type="submit">Upload Image</button>
+</form>
     <div id="feed"></div>
 
     <script src="script.js"></script>
