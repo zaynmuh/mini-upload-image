@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Instagram Clone</title>
+    <title>Mini Instagram</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <h1>WFC project</h1>
-    <p>My first fullstack app</p>
+    <h1>Mini Instagram 📸</h1>
+
+    <form id="uploadForm">
+      <input type="file" id="imageInput" accept="image/*" />
+      <button type="submit">Upload Image</button>
+    </form>
+
+    <div id="feed"></div>
 
     <script src="script.js"></script>
   </body>
