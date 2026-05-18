@@ -50,21 +50,11 @@ app.post("/upload", upload.single("image"), (req, res) => {
 
 // Get all uploaded images
 app.get("/images", (req, res) => {
-  const uploadsPath = path.join(__dirname, "uploads");
+  res.json(posts);
+});
 
-  fs.readdir(uploadsPath, (err, files) => {
-    if (err) {
-      return res.status(500).json({
-        error: "Failed to load images",
-      });
-    }
-
-    const imageUrls = files.map((file) => `/uploads/${file}`);
-
-    app.get("/images", (req, res) => {
-      res.json(posts);
-    })
-  });
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.listen(PORT, () => {
