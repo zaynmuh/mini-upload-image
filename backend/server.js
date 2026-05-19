@@ -6,7 +6,7 @@ const fs = require("fs");
 const app = express();
 const PORT = 3000;
 
-const posts = [];
+const db = require("./database");
 
 // Storage setup
 const storage = multer.diskStorage({
@@ -37,20 +37,55 @@ app.get("/", (req, res) => {
 
 // Upload route
 app.post("/upload", upload.single("image"), (req, res) => {
-  const newPost = {
-    imageUrl: `/uploads/${req.file.filename}`,
-    caption: req.body.caption,
-    createdAt: new Date(),
-  };
+  const imageUrl = `/uploads/${req.file.filename}`;
+  const caption = req.body.caption;
+  const createdAt = new Date().toISOString();
 
-  posts.push(newPost);
+  const query = `
+    INSERT INTO posts (image_url, caption, created_at)
+    VALUES (?, ?, ?)
+  `;
 
-  res.json(newPost);
+  db.run(query, [imageUrl, caption, createdAt], function (err) {
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+
+    res.json({
+      id: this.lastID,
+      imageUrl,
+      caption,
+      createdAt,
+    });
+  });
 });
 
 // Get all uploaded images
+
 app.get("/images", (req, res) => {
-  res.json(posts);
+  const query = `
+    SELECT * FROM posts
+    ORDER BY id DESC
+  `;
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+
+    const formattedPosts = rows.map((row) => ({
+      id: row.id,
+      imageUrl: row.image_url,
+      caption: row.caption,
+      createdAt: row.created_at,
+    }));
+
+    res.json(formattedPosts);
+  });
 });
 
 app.listen(PORT, () => {
