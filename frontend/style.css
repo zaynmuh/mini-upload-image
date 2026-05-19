@@ -18,15 +18,16 @@ form {
 }
 
 #feed img {
-  border-radius: 12px;
-}
-
-#feed img {
   width: 300px;
   border-radius: 12px;
   object-fit: cover;
 }
 
+
 #feed div {
+  width: 300px;
   margin-bottom: 30px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 12px;
 }
