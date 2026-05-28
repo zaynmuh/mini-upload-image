@@ -37,45 +37,40 @@ app.get("/", (req, res) => {
 
 // Upload route
 app.post("/upload", upload.single("image"), (req, res) => {
-  const imageUrl = `/uploads/${req.file.filename}`;
-  const caption = req.body.caption;
-  const createdAt = new Date().toISOString();
+  try {
+    const imageUrl = `/uploads/${req.file.filename}`;
+    const caption = req.body.caption;
+    const createdAt = new Date().toISOString();
 
-  const query = `
-    INSERT INTO posts (image_url, caption, created_at)
-    VALUES (?, ?, ?)
-  `;
+    const query = db.prepare(`
+      INSERT INTO posts (image_url, caption, created_at)
+      VALUES (?, ?, ?)
+    `);
 
-  db.run(query, [imageUrl, caption, createdAt], function (err) {
-    if (err) {
-      return res.status(500).json({
-        error: err.message,
-      });
-    }
+    const result = query.run(imageUrl, caption, createdAt);
 
     res.json({
-      id: this.lastID,
+      id: result.lastInsertRowid,
       imageUrl,
       caption,
       createdAt,
     });
-  });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 });
 
 // Get all uploaded images
-
 app.get("/images", (req, res) => {
-  const query = `
-    SELECT * FROM posts
-    ORDER BY id DESC
-  `;
+  try {
+    const query = db.prepare(`
+      SELECT * FROM posts
+      ORDER BY id DESC
+    `);
 
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({
-        error: err.message,
-      });
-    }
+    const rows = query.all();
 
     const formattedPosts = rows.map((row) => ({
       id: row.id,
@@ -85,13 +80,9 @@ app.get("/images", (req, res) => {
     }));
 
     res.json(formattedPosts);
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 });
