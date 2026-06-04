@@ -3,6 +3,8 @@ import Post from "./components/Post";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [caption, setCaption] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
   async function loadPosts() {
@@ -22,9 +24,77 @@ function App() {
   loadPosts();
 }, []);
 
+async function handleUpload(event) {
+  event.preventDefault();
+
+  if (!selectedFile) {
+    alert("Please select an image");
+    return;
+  }
+
+  const formData = new FormData();
+
+  formData.append("image", selectedFile);
+  formData.append("caption", caption);
+
+  try {
+    const response = await fetch(
+      "http://localhost:3000/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const newPost = await response.json();
+
+    setPosts((currentPosts) => [
+      newPost,
+      ...currentPosts,
+    ]);
+
+    setCaption("");
+    setSelectedFile(null);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
-    <div>
+    <div className="app">
       <h1>Mini Instagram 📸</h1>
+
+      <form
+        className="upload-form"
+        onSubmit={handleUpload}
+      >
+
+        <input
+          type="file"
+          onChange={(event) =>
+            setSelectedFile(event.target.files[0])
+          }
+        />
+
+        <br />
+        <br />
+
+        <input
+          type="text"
+          placeholder="Write caption..."
+          value={caption}
+          onChange={(event) =>
+            setCaption(event.target.value)
+          }
+        />
+
+        <br />
+        <br />
+
+        <button type="submit">
+          Upload Post
+        </button>
+      </form>
 
       <div>
          <p>Total posts: {posts.length}</p>

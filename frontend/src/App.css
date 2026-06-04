@@ -1,17 +1,76 @@
 body {
+  margin: 0;
+  background: #fafafa;
   font-family: Arial, sans-serif;
-  padding: 40px;
+}
+
+.app {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.upload-form {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.upload-form input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.upload-form button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #0095f6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.upload-form button:hover {
+  opacity: 0.9;
 }
 
 .post-card {
-  width: 320px;
-  border: 1px solid #ddd;
+  background: white;
   border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .post-card img {
   width: 100%;
-  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.post-content {
+  padding: 12px;
+}
+
+.post-content p {
+  margin: 0 0 8px 0;
+}
+
+.post-content small {
+  color: gray;
 }
