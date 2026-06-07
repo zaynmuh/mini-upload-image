@@ -81,6 +81,7 @@ app.get("/images", (req, res) => {
       id: row.id,
       imageUrl: row.image_url,
       caption: row.caption,
+      likes: row.likes,
       createdAt: row.created_at,
     }));
 
@@ -90,4 +91,21 @@ app.get("/images", (req, res) => {
       error: error.message,
     });
   }
+});
+
+// like API
+app.post("/like/:id", (req, res) => {
+  const postId = req.params.id;
+
+  const query = db.prepare(`
+    UPDATE posts
+    SET likes = likes + 1
+    WHERE id = ?
+  `);
+
+  query.run(postId);
+
+  res.json({
+    success: true,
+  });
 });

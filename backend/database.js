@@ -9,6 +9,7 @@ db.prepare(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     image_url TEXT,
     caption TEXT,
+    likes INTEGER DEFAULT 0,
     created_at TEXT
   )
 `).run();

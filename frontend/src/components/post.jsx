@@ -1,4 +1,4 @@
-function Post({ post }) {
+function Post({ post, handleLike }) {
   return (
     <div className="post-card">
       <img
@@ -8,6 +8,12 @@ function Post({ post }) {
 
       <div className="post-content">
         <p>{post.caption}</p>
+      
+      <p>❤️ {post.likes} likes</p>
+
+      <button onClick={() => handleLike(post.id)}>
+        ❤️ Like
+      </button>      
 
         <small>
           {new Date(post.createdAt).toLocaleString()}

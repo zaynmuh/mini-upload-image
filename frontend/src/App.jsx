@@ -7,21 +7,21 @@ function App() {
   const [caption, setCaption] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
-  useEffect(() => {
   async function loadPosts() {
     try {
-      const response = await fetch("http://localhost:3000/images");
+      const response = await fetch(
+        "http://localhost:3000/images"
+    );
 
-      const data = await response.json();
+    const data = await response.json();
 
-      console.log(data);
-
-      setPosts(data);
-    } catch (error) {
-      console.error(error);
-    }
+    setPosts(data);
+  } catch (error) {
+    console.error(error);
   }
+}
 
+useEffect(() => {
   loadPosts();
 }, []);
 
@@ -61,6 +61,21 @@ async function handleUpload(event) {
   }
 }
 
+async function handleLike(postId) {
+  try {
+    await fetch(
+      `http://localhost:3000/like/${postId}`,
+      {
+        method: "POST",
+      }
+    );
+
+    loadPosts();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
     <div className="app">
       <h1>Mini Instagram 📸</h1>
@@ -77,8 +92,6 @@ async function handleUpload(event) {
           }
         />
 
-        <br />
-        <br />
 
         <input
           type="text"
@@ -88,9 +101,6 @@ async function handleUpload(event) {
             setCaption(event.target.value)
           }
         />
-
-        <br />
-        <br />
 
         <button type="submit">
           Upload Post
@@ -104,6 +114,7 @@ async function handleUpload(event) {
         <Post
           key={post.id}
           post={post}
+          handleLike={handleLike}
         />
         ))}
       </div>
