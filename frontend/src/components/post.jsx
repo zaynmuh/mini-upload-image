@@ -6,11 +6,13 @@ function Post({ post }) {
         alt={post.caption}
       />
 
-      <p>{post.caption}</p>
+      <div className="post-content">
+        <p>{post.caption}</p>
 
-      <small>
-        {new Date(post.createdAt).toLocaleString()}
-      </small>
+        <small>
+          {new Date(post.createdAt).toLocaleString()}
+        </small>
+      </div>
     </div>
   );
 }
