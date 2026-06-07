@@ -109,3 +109,59 @@ app.post("/like/:id", (req, res) => {
     success: true,
   });
 });
+
+// delete post
+app.delete("/posts/:id", (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const query = db.prepare(`
+      DELETE FROM posts
+      WHERE id = ?
+    `);
+
+    query.run(postId);
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to delete post",
+    });
+  }
+});
+
+// update post
+app.put("/posts/:id", (req, res) => {
+  const { id } = req.params;
+  const { caption } = req.body;
+
+  if (!caption) {
+  return res.status(400).json({
+    error: "Caption is required",
+  });
+}
+
+  try {
+    const query = db.prepare(`
+      UPDATE posts
+      SET caption = ?
+      WHERE id = ?
+    `);
+
+    query.run(caption, id);
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to update post",
+    });
+  }
+});

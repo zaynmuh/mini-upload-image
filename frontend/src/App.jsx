@@ -76,6 +76,25 @@ async function handleLike(postId) {
   }
 }
 
+async function handleDelete(postId) {
+  try {
+    await fetch(
+      `http://localhost:3000/posts/${postId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    setPosts((currentPosts) =>
+      currentPosts.filter(
+        (post) => post.id !== postId
+      )
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
     <div className="app">
       <h1>Mini Instagram 📸</h1>
@@ -115,6 +134,7 @@ async function handleLike(postId) {
           key={post.id}
           post={post}
           handleLike={handleLike}
+          handleDelete={handleDelete}
         />
         ))}
       </div>
