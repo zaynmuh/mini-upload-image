@@ -1,4 +1,4 @@
-function Post({ post, handleLike, handleDelete, }) {
+function Post({ post, handleLike, handleDelete, handleEdit, }) {
   return (
     <div className="post-card">
       <img
@@ -14,6 +14,12 @@ function Post({ post, handleLike, handleDelete, }) {
       <button onClick={() => handleLike(post.id)}>
         ❤️ Like
       </button>    
+
+      <button
+        onClick={() => handleEdit(post.id)}
+      >
+        ✏️ Edit
+      </button>
 
       <button
         onClick={() => handleDelete(post.id)}

@@ -95,6 +95,43 @@ async function handleDelete(postId) {
   }
 }
 
+async function handleEdit(postId) {
+  const newCaption = prompt(
+    "Enter new caption"
+  );
+
+  if (!newCaption) return;
+
+  try {
+    await fetch(
+      `http://localhost:3000/posts/${postId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          caption: newCaption,
+        }),
+      }
+    );
+
+    setPosts((currentPosts) =>
+      currentPosts.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              caption: newCaption,
+            }
+          : post
+      )
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
     <div className="app">
       <h1>Mini Instagram 📸</h1>
@@ -135,6 +172,7 @@ async function handleDelete(postId) {
           post={post}
           handleLike={handleLike}
           handleDelete={handleDelete}
+          handleEdit={handleEdit}
         />
         ))}
       </div>
