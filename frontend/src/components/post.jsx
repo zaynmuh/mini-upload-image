@@ -1,36 +1,56 @@
-function Post({ post, handleLike, handleDelete, handleEdit, }) {
+function Post({
+  post,
+  handleLike,
+  handleDelete,
+  handleEdit,
+}) {
   return (
     <div className="post-card">
-      <img
-        src={`http://localhost:3000${post.imageUrl}`}
-        alt={post.caption}
-      />
+
+      {post.imageUrl && (
+        <img
+          src={`http://localhost:3000${post.imageUrl}`}
+          alt={post.caption}
+        />
+      )}
 
       <div className="post-content">
+
         <p>{post.caption}</p>
-      
-      <p>❤️ {post.likes} likes</p>
 
-      <button onClick={() => handleLike(post.id)}>
-        ❤️ Like
-      </button>    
+        <p>❤️ {post.likes} likes</p>
 
-      <button
-        onClick={() => handleEdit(post.id)}
-      >
-        ✏️ Edit
-      </button>
+        <div className="post-actions">
 
-      <button
-        onClick={() => handleDelete(post.id)}
-      >
-        🗑 Delete
-      </button>  
+          <button
+            className="like-btn"
+            onClick={() => handleLike(post.id)}
+          >
+            ❤️ Like
+          </button>
+
+          <button
+            className="edit-btn"
+            onClick={() => handleEdit(post.id)}
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            className="delete-btn"
+            onClick={() => handleDelete(post.id)}
+          >
+            🗑️ Delete
+          </button>
+
+        </div>
 
         <small>
           {new Date(post.createdAt).toLocaleString()}
         </small>
+
       </div>
+
     </div>
   );
 }

@@ -79,3 +79,60 @@ h1 {
 .post-content small {
   color: gray;
 }
+
+.post-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.post-actions button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.like-btn {
+  background: #ffebee;
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.edit-btn {
+  background: #fff8e1;
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: #ffebee;
+  color: #c62828;
+  font-weight: 600;
+}
+
+.post-actions button:hover {
+  transform: translateY(-2px);
+  transition: 0.2s;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 24px;
+}
+
+.post-card {
+  transition: 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
