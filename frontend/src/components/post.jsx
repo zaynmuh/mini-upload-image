@@ -1,3 +1,5 @@
+import { API_URL } from "../services/api";
+
 function Post({
   post,
   handleLike,
@@ -9,7 +11,7 @@ function Post({
 
       {post.imageUrl && (
         <img
-          src={`http://localhost:3000${post.imageUrl}`}
+          src={`${API_URL}${post.imageUrl}`}
           alt={post.caption}
         />
       )}

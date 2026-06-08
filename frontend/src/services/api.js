@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:3000";
+export const API_URL =
+  "https://mini-upload-image.onrender.com";
 
 export async function getPosts() {
   const response = await fetch(
