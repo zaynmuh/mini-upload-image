@@ -64,7 +64,7 @@ async function handleLike(postId) {
   try {
     await likePost(postId);
 
-    loadPosts();
+    await loadPosts();
   } catch (error) {
     console.error(error);
   }
