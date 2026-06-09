@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Post from "./components/Post";
 import "./App.css";
 import {
   getPosts,
@@ -9,12 +8,16 @@ import {
   editPost,
 } from "./services/api";
 import UploadForm from "./components/UploadForm";
+import { API_URL } from "./services/api";
+import PostModal from "./components/PostModal";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [caption, setCaption] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] =
+    useState(null);
 
   async function loadPosts() {
       try {
@@ -127,6 +130,22 @@ if (loading) {
         <h1>Mini Instagram 📸</h1>
       </div>
 
+      <div className="profile-header">
+
+        <img
+          className="avatar"
+          src="https://i.pravatar.cc/150"
+          alt="Profile"
+        />
+
+        <h2>zen</h2>
+
+        <p>
+          {posts.length} posts
+        </p>
+
+      </div>
+
       <UploadForm
         caption={caption}
         setCaption={setCaption}
@@ -135,22 +154,47 @@ if (loading) {
       />
 
       <div>
-        <p>Total posts: {posts.length}</p>
+        <div className="profile-stats">
+          <span>
+            <strong>{posts.length}</strong> posts
+          </span>
+
+          <span>
+            <strong>0</strong> followers
+          </span>
+
+          <span>
+            <strong>0</strong> following
+          </span>
+        </div>
 
         {posts.length === 0 && (
           <p>No posts yet 📸</p>
         )}
 
-        {posts.map((post) => (
-        <Post
-          key={post.id}
-          post={post}
-          handleLike={handleLike}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-        />
-        ))}
+        <div className="posts-grid">
+
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="post-thumbnail"
+              onClick={() => setSelectedPost(post)}
+            >
+              <img
+                src={`${API_URL}${post.imageUrl}`}
+                alt={post.caption}
+              />
+            </div>
+          ))}
+        </div>
       </div>
+
+      <PostModal
+        post={selectedPost}
+        onClose={() =>
+          setSelectedPost(null)
+        }
+      />
     </div>
   );
 }
