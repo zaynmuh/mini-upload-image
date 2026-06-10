@@ -1,0 +1,7 @@
+const config = {
+  appId: "com.zen.miniinstagram",
+  appName: "Mini Instagram",
+  webDir: "dist",
+};
+
+export default config;

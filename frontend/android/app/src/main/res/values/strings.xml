@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mini Instagram</string>
+    <string name="title_activity_main">Mini Instagram</string>
+    <string name="package_name">com.zen.miniinstagram</string>
+    <string name="custom_url_scheme">com.zen.miniinstagram</string>
+</resources>
